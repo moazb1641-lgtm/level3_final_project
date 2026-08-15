@@ -41,7 +41,7 @@ Books by Authors Starting with 'A':
 4      505  Letters to the Nile      Aya Hafez
 5      506  The Paper Boat Club      Aya Hafez
 _______________________________________________________________________________________________________________
-# Third question: What are the most five popular books?
+# Third question: What are the top five popular books?
 
 popular_books_df = pd.read_sql_query('''
 SELECT
@@ -131,3 +131,14 @@ Neighborhood Activity for 'Maadi':
 7    2025-07-27       Ziad     Fouad       1013
 8    2025-07-22     Bassel    Hegazy       1003
 9    2025-07-22     Hassan     Saleh       1009
+_______________________________________________________________________________________________________________
+APIs VS Web Scraping:
+
+APIs:
+- API provides cleaned and structured data. While column names might still differ from database schema, the values are clean and consistent.
+
+Web Scraping:
+- Web Scraping extracts data from raw HTML code, This data comes with formatting noise like Unpredictable white spaces and inconsistent formatting in table headers.
+
+Why does this matter for our project?:
+- As we have HTML code, we have to use Web Scraping. Before renaming column names which is necessary for both APIs and Web Scraping, we had to perform Data Cleaning & Standardization. We had to use some strings operations such as (.strip(), .lower(), .replace(' ', '_')) To remove invisible HTML spaces, clean and standardize column headers before renaming them to make them ready to be merged with another DataFrames.
