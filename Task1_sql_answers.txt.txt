@@ -1,0 +1,133 @@
+# First question: How much is each member borrowing?
+
+member_checkouts_df = pd.read_sql_query('''
+SELECT
+    members.member_id,
+    members.first_name,
+    members.last_name,
+    COUNT(checkouts.checkout_id) AS borrowing_count
+FROM members
+LEFT JOIN checkouts ON members.member_id = checkouts.member_id
+GROUP BY members.member_id, members.first_name, members.last_name
+''', conn)
+print("\nMember Checkouts Table:")
+print(member_checkouts_df.head())
+
+Output:
+
+Member Checkouts Table:
+   member_id first_name last_name  borrowing_count
+0       1001      Salma   Ibrahim                1
+1       1002      Fares     Saleh                2
+2       1003     Bassel    Hegazy                9
+3       1004      Fares     Wahba                0
+4       1005    Youssef     Halim                3
+_______________________________________________________________________________________________________________
+# Second question: Which books match a chosen author pattern?
+
+pattern_authors_df = pd.read_sql_query("SELECT * FROM books WHERE author LIKE 'A%'", conn)
+print("\nBooks by Authors Starting with 'A':")
+print(pattern_authors_df)
+
+Output:
+
+
+Books by Authors Starting with 'A':
+   book_id                title         author
+0      501      The Silver Kite  Amina Darwish
+1      502       Desert Compass  Amina Darwish
+2      503    The Lantern Maker   Adel Roushdy
+3      504  Rooftop Astronomers   Adel Roushdy
+4      505  Letters to the Nile      Aya Hafez
+5      506  The Paper Boat Club      Aya Hafez
+_______________________________________________________________________________________________________________
+# Third question: What are the most five popular books?
+
+popular_books_df = pd.read_sql_query('''
+SELECT
+    books.title,
+    COUNT(checkouts.checkout_id) as checkout_count
+FROM books
+LEFT JOIN checkouts ON books.book_id = checkouts.book_id
+GROUP BY books.title, books.book_id 
+ORDER BY checkout_count DESC
+LIMIT 5''', conn)
+print("\nTop 5 Most Popular Books:")
+print(popular_books_df)
+
+Output:
+
+
+Top 5 Most Popular Books:
+                    title  checkout_count
+0         The Silver Kite              57
+1   Fossils and Fireflies              55
+2  Circuits for Beginners              46
+3        Kites Over Cairo              38
+4    Storms and Sailboats              25
+_______________________________________________________________________________________________________________
+# Fourth question: Who are the most active readers?
+
+active_readers_df = pd.read_sql_query('''
+SELECT 
+    members.first_name,
+    members.last_name,
+    members.member_id,
+    COUNT(checkouts.checkout_id) as Borrowing_count
+FROM members
+JOIN checkouts ON members.member_id = checkouts.member_id
+GROUP BY members.member_id ORDER BY Borrowing_count DESC 
+LIMIT 10;
+''', conn)
+print("\nTop 10 Most Active Readers:")
+print(active_readers_df)
+
+Output:
+
+
+Top 10 Most Active Readers:
+  first_name last_name  member_id  Borrowing_count
+0        Aya     Wahba       1034               25
+1     Sherif     Saleh       1044               21
+2       Ziad     Saleh       1008               19
+3    Mostafa     Fouad       1027               18
+4       Nour     Nabil       1010               18
+5       Adam     Fahmy       1065               17
+6    Youssef    Hegazy       1024               17
+7      Ahmed    Shafik       1018               17
+8       Sara    Rashad       1047               16
+9       Reem     Osman       1030               16
+_______________________________________________________________________________________________________________
+# Fifth question: What does a neighborhood's activity look like further back in time?
+
+neighborhood_activity_df = pd.read_sql_query("""
+SELECT 
+    checkouts.checkout_date,
+    members.first_name,
+    members.last_name,
+    members.member_id
+FROM checkouts
+JOIN members ON checkouts.member_id = members.member_id
+WHERE members.neighborhood = 'Maadi'
+ORDER BY checkouts.checkout_date DESC
+LIMIT 10
+OFFSET 10;
+""", conn)
+print("\nNeighborhood Activity for 'Maadi':")
+print(neighborhood_activity_df)
+
+Output:
+
+
+Neighborhood Activity for 'Maadi':
+  checkout_date first_name last_name  member_id
+0    2025-09-04     Bassel    Hegazy       1003
+1    2025-08-25       Adam      Badr       1017
+2    2025-08-23       Ziad     Saleh       1008
+3    2025-08-21     Bassel    Hegazy       1003
+4    2025-08-19      Ahmed    Shafik       1018
+5    2025-08-08      Hamza     Sabry       1015
+6    2025-08-04      Ahmed    Shafik       1018
+7    2025-07-27       Ziad     Fouad       1013
+8    2025-07-22     Bassel    Hegazy       1003
+9    2025-07-22     Hassan     Saleh       1009
