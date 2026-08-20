@@ -1,0 +1,23 @@
+commit cfdcf191cb7f0a56a23e63f6bfc1536ab01f02c1 (HEAD -> main, origin/main)
+Author: Moaz Elbadawy <moazb1641@gmail.com>
+Date:   Fri Aug 21 00:15:29 2026 +0300
+
+    Task3: Data Fairness, the saved files 'fairness_reflection.docx', 'git_log.txt'
+
+commit 83cd848c87dd1655a4c6be8682210f2230809c34
+Author: Moaz Elbadawy <moazb1641@gmail.com>
+Date:   Wed Aug 19 01:51:48 2026 +0300
+
+    Task2: Data Integrity
+
+commit d602428d87f860bb4cac7529f0203c81bda2cc18
+Author: Moaz Elbadawy <moazb1641@gmail.com>
+Date:   Sat Aug 15 06:26:38 2026 +0300
+
+    Editting text file
+
+commit 40f6defd4dac5b0a39c1533ce1bf73a9b42f659f
+Author: Moaz Elbadawy <moazb1641@gmail.com>
+Date:   Sat Aug 15 04:25:48 2026 +0300
+
+    Task1: Data Gathering & Combination
